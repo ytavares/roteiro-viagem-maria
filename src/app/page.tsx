@@ -243,7 +243,6 @@ export default function LandingPage() {
       </section>
 
       <footer className="bg-indigo-950 py-12 text-center border-t border-white/10 text-slate-500 text-sm">
-        <p className="mb-2">Documento extraído do planejamento de 2026</p>
         <p className="font-bold text-slate-400 uppercase tracking-widest">
           © Desenvolvido por Maria
         </p>
