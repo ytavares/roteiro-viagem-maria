@@ -1,3 +1,5 @@
+'use client';
+
 import {
   MapPin,
   Calendar,
@@ -5,14 +7,42 @@ import {
   Utensils,
   Info,
   CheckCircle,
+  Square,
 } from 'lucide-react';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 export default function LandingPage() {
+  const [completed, setCompleted] = useState<{ [key: string]: boolean }>(() => {
+    if (typeof globalThis.window !== 'undefined') {
+      const saved = localStorage.getItem('roteiro-completed');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    }
+    return {};
+  });
+
+  // Salva o estado no localStorage sempre que mudar
+  useEffect(() => {
+    if (typeof globalThis.window !== 'undefined') {
+      localStorage.setItem('roteiro-completed', JSON.stringify(completed));
+    }
+  }, [completed]);
+
+  const toggleActivity = (diaIndex: number, atividadeIndex: number) => {
+    const key = `${diaIndex}-${atividadeIndex}`;
+    setCompleted((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
+
   const roteiro = [
     {
       dia: '19',
       local: 'Recife & Olinda',
+      imagem: '/images/dia1.jpeg',
       atividades: [
         'Deslocamento para Olinda (Centro Histórico)',
         'Catedral da Sé e Casa dos Bonecos Gigantes (R$ 10)',
@@ -28,6 +58,7 @@ export default function LandingPage() {
     {
       dia: '20',
       local: 'Carneiros & Maragogi',
+      imagem: '/images/dia2.jpeg',
       atividades: [
         'Praia dos Carneiros',
         'Passeio de Buggy em Maragogi (R$ 300/buggy)',
@@ -43,6 +74,7 @@ export default function LandingPage() {
     {
       dia: '21',
       local: 'João Pessoa',
+      imagem: '/images/dia3.jpeg',
       atividades: [
         'Piscinas Naturais do Seixas',
         'Passeio de Catamarã (R$ 100 - R$ 119)',
@@ -65,6 +97,7 @@ export default function LandingPage() {
           src="/images/capaViagem.jpeg"
           alt="Recife"
           fill
+          sizes="100vw"
           className="object-cover"
           priority
         />
@@ -143,38 +176,63 @@ export default function LandingPage() {
               className={`flex flex-col md:flex-row gap-8 p-1 rounded-[2rem] ${item.cor} border-2 ${item.border} shadow-sm overflow-hidden`}
             >
               <div
-                className={`md:w-1/3 p-8 flex flex-col justify-center items-center text-center rounded-[1.8rem] bg-white shadow-inner`}
+                className={`md:w-1/3 p-8 flex flex-col justify-center items-center text-center rounded-[1.8rem] bg-white shadow-inner relative overflow-hidden`}
               >
-                <span
-                  className={`text-7xl font-black ${item.accent} opacity-20 block mb-[-20px]`}
-                >
-                  0{index + 1}
-                </span>
-                <span
-                  className={`text-sm font-bold uppercase tracking-tighter ${item.accent}`}
-                >
-                  DIA {item.dia}
-                </span>
-                <h3 className="text-3xl font-black mt-2 leading-tight">
-                  {item.local}
-                </h3>
+                <Image
+                  src={item.imagem}
+                  alt={item.local}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover absolute inset-0 opacity-70"
+                />
+                <div className="relative z-10">
+                  <span
+                    className={`text-7xl font-black ${item.accent} opacity-90 block mb-[-20px]`}
+                  >
+                    0{index + 1}
+                  </span>
+                  <span
+                    className={`text-sm font-bold uppercase tracking-tighter ${item.accent}`}
+                  >
+                    DIA {item.dia}
+                  </span>
+                  <h3 className="text-3xl font-black mt-2 leading-tight">
+                    {item.local}
+                  </h3>
+                </div>
               </div>
 
               <div className="md:w-2/3 p-8">
                 <ul className="grid grid-cols-1 gap-4">
-                  {item.atividades.map((act, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-4 bg-white/80 p-4 rounded-xl shadow-sm border border-white"
-                    >
-                      <CheckCircle
-                        className={`${item.icon} w-6 h-6 shrink-0`}
-                      />
-                      <span className="text-lg font-medium text-indigo-900">
-                        {act}
-                      </span>
-                    </li>
-                  ))}
+                  {item.atividades.map((act, i) => {
+                    const key = `${index}-${i}`;
+                    const isCompleted = completed[key];
+                    return (
+                      <li key={key} className="list-none">
+                        <button
+                          onClick={() => toggleActivity(index, i)}
+                          className={`flex items-center gap-4 bg-white/80 p-4 rounded-xl shadow-sm border border-white cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-md w-full text-left ${
+                            isCompleted ? 'bg-green-50/80 border-green-300' : ''
+                          }`}
+                        >
+                          {isCompleted ? (
+                            <CheckCircle className="w-6 h-6 shrink-0 transition-all duration-300 text-green-600" />
+                          ) : (
+                            <Square
+                              className={`w-6 h-6 shrink-0 transition-all duration-300 ${item.icon}`}
+                            />
+                          )}
+                          <span
+                            className={`text-lg font-medium text-indigo-900 transition-all duration-500 ${
+                              isCompleted ? 'line-through opacity-60' : ''
+                            }`}
+                          >
+                            {act}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
@@ -183,7 +241,7 @@ export default function LandingPage() {
       </main>
 
       {/* Dicas e Alimentação com Cores Vivas */}
-      <section className="bg-indigo-950 text-white py-24 px-4 rounded-t-[3rem] md:rounded-t-[6rem]">
+      <section className="bg-indigo-950 text-white py-24 px-4 ">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
           <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
             <div className="flex items-center gap-4 mb-8">
