@@ -102,13 +102,13 @@ export default function LandingPage() {
           priority
         />
         <div className="relative z-20 text-center px-4">
-          <span className="uppercase tracking-widest text-yellow-400 font-bold mb-2 block animate-bounce">
-            Expedição Nordeste 2026
+          <span className="uppercase text-4xl tracking-widest text-yellow-400 font-bold mb-2 block animate-bounce">
+            Madu faz 19
           </span>
           <h1 className="text-6xl md:text-8xl font-black mb-4 drop-shadow-2xl">
             Roteiro Viagem
           </h1>
-          <p className="text-3xl md:text-4xl font-light italic text-pink-500">
+          <p className="text-3xl md:text-4xl font-light italic text-yellow-400">
             By Maria
           </p>
         </div>
