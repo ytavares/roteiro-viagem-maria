@@ -23,6 +23,36 @@ export default function LandingPage() {
     return {};
   });
 
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  // Contador regressivo até 19/03/2026
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const targetDate = new Date('2026-03-19T00:00:00').getTime();
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   // Salva o estado no localStorage sempre que mudar
   useEffect(() => {
     if (typeof globalThis.window !== 'undefined') {
@@ -113,6 +143,82 @@ export default function LandingPage() {
           </p>
         </div>
       </header>
+
+      {/* Contador Regressivo */}
+      {(() => {
+        const now = new Date();
+        const startDate = new Date('2026-03-19T00:00:00');
+        const endDate = new Date('2026-03-22T00:00:00');
+
+        // Depois do dia 21, não mostra nada
+        if (now >= endDate) {
+          return null;
+        }
+
+        // Entre dia 19 e 21, mostra mensagem especial
+        if (now >= startDate && now < endDate) {
+          return (
+            <section className="bg-gradient-to-r from-yellow-500 to-orange-500 relative z-20 py-16 md:py-20">
+              <div className="max-w-4xl mx-auto px-4 text-center">
+                <div className="animate-bounce mb-6">
+                  <span className="text-6xl md:text-8xl">🎉</span>
+                </div>
+                <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-4 drop-shadow-2xl">
+                  É HOJE A VIAGEM!
+                </h2>
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold text-white/90">
+                  Bora aproveitar cada momento! ✨
+                </p>
+              </div>
+            </section>
+          );
+        }
+
+        // Antes do dia 19, mostra o contador
+        return (
+          <section className="bg-gradient-to-r from-indigo-600 to-purple-600 relative z-20 pb-24 pt-8 md:pt-12">
+            <div className="max-w-6xl mx-auto px-4 text-center">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">
+                Contagem Regressiva para a Viagem! 🎉
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 md:gap-4 max-w-2xl mx-auto">
+                <div className="bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 border-2 border-white/30">
+                  <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-1 md:mb-2">
+                    {timeLeft.days}
+                  </div>
+                  <div className="text-xs sm:text-sm md:text-base font-semibold text-white/90 uppercase tracking-wider">
+                    Dias
+                  </div>
+                </div>
+                <div className="bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 border-2 border-white/30">
+                  <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-1 md:mb-2">
+                    {timeLeft.hours}
+                  </div>
+                  <div className="text-xs sm:text-sm md:text-base font-semibold text-white/90 uppercase tracking-wider">
+                    Horas
+                  </div>
+                </div>
+                <div className="bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 border-2 border-white/30">
+                  <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-1 md:mb-2">
+                    {timeLeft.minutes}
+                  </div>
+                  <div className="text-xs sm:text-sm md:text-base font-semibold text-white/90 uppercase tracking-wider">
+                    Minutos
+                  </div>
+                </div>
+                <div className="bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 border-2 border-white/30">
+                  <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-1 md:mb-2">
+                    {timeLeft.seconds}
+                  </div>
+                  <div className="text-xs sm:text-sm md:text-base font-semibold text-white/90 uppercase tracking-wider">
+                    Segundos
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Info Rápida - Cartões Coloridos */}
       <section className="max-w-6xl mx-auto -mt-20 relative z-30 px-4">
