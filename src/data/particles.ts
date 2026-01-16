@@ -1,0 +1,160 @@
+export interface Particle {
+  left: string;
+  top: string;
+  delay: number;
+  color: string;
+  size: string;
+}
+
+export const particles: Particle[] = [
+  { left: '10%', top: '20%', delay: 0, color: 'bg-pink-400', size: 'w-3 h-3' },
+  {
+    left: '85%',
+    top: '15%',
+    delay: 0.5,
+    color: 'bg-pink-500',
+    size: 'w-2 h-2',
+  },
+  { left: '25%', top: '70%', delay: 1, color: 'bg-rose-400', size: 'w-4 h-4' },
+  {
+    left: '70%',
+    top: '65%',
+    delay: 1.5,
+    color: 'bg-pink-300',
+    size: 'w-2.5 h-2.5',
+  },
+  {
+    left: '50%',
+    top: '40%',
+    delay: 2,
+    color: 'bg-fuchsia-400',
+    size: 'w-3 h-3',
+  },
+  {
+    left: '15%',
+    top: '85%',
+    delay: 2.5,
+    color: 'bg-pink-500',
+    size: 'w-2 h-2',
+  },
+  {
+    left: '90%',
+    top: '80%',
+    delay: 3,
+    color: 'bg-rose-500',
+    size: 'w-3.5 h-3.5',
+  },
+  {
+    left: '40%',
+    top: '10%',
+    delay: 0.3,
+    color: 'bg-pink-400',
+    size: 'w-2 h-2',
+  },
+  {
+    left: '60%',
+    top: '30%',
+    delay: 1.8,
+    color: 'bg-fuchsia-500',
+    size: 'w-2.5 h-2.5',
+  },
+  {
+    left: '30%',
+    top: '50%',
+    delay: 2.2,
+    color: 'bg-rose-400',
+    size: 'w-3 h-3',
+  },
+  { left: '5%', top: '45%', delay: 0.8, color: 'bg-pink-500', size: 'w-2 h-2' },
+  {
+    left: '95%',
+    top: '50%',
+    delay: 1.3,
+    color: 'bg-fuchsia-400',
+    size: 'w-3 h-3',
+  },
+  {
+    left: '45%',
+    top: '75%',
+    delay: 2.8,
+    color: 'bg-rose-500',
+    size: 'w-2.5 h-2.5',
+  },
+  {
+    left: '75%',
+    top: '25%',
+    delay: 0.6,
+    color: 'bg-pink-400',
+    size: 'w-3.5 h-3.5',
+  },
+  {
+    left: '20%',
+    top: '35%',
+    delay: 1.2,
+    color: 'bg-pink-300',
+    size: 'w-2 h-2',
+  },
+  {
+    left: '55%',
+    top: '60%',
+    delay: 2.4,
+    color: 'bg-fuchsia-500',
+    size: 'w-2.5 h-2.5',
+  },
+  {
+    left: '35%',
+    top: '15%',
+    delay: 1.6,
+    color: 'bg-rose-400',
+    size: 'w-3 h-3',
+  },
+  {
+    left: '80%',
+    top: '90%',
+    delay: 0.4,
+    color: 'bg-pink-500',
+    size: 'w-2 h-2',
+  },
+  {
+    left: '12%',
+    top: '55%',
+    delay: 2.6,
+    color: 'bg-fuchsia-400',
+    size: 'w-3 h-3',
+  },
+  {
+    left: '65%',
+    top: '8%',
+    delay: 1.1,
+    color: 'bg-pink-400',
+    size: 'w-2.5 h-2.5',
+  },
+  {
+    left: '48%',
+    top: '85%',
+    delay: 0.9,
+    color: 'bg-rose-500',
+    size: 'w-3.5 h-3.5',
+  },
+  {
+    left: '88%',
+    top: '40%',
+    delay: 2.1,
+    color: 'bg-pink-300',
+    size: 'w-2 h-2',
+  },
+  {
+    left: '22%',
+    top: '92%',
+    delay: 1.4,
+    color: 'bg-fuchsia-500',
+    size: 'w-3 h-3',
+  },
+  {
+    left: '52%',
+    top: '18%',
+    delay: 0.7,
+    color: 'bg-rose-400',
+    size: 'w-2.5 h-2.5',
+  },
+];
